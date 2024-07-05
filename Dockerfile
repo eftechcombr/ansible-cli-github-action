@@ -5,7 +5,7 @@ RUN apt-get update \
 
 RUN python3 -m venv env \
   && source env/bin/activate \
-  && pip3 install ansible
+  && pip3 install ansible pywinrm[credssp]
 
 COPY entrypoint.sh /entrypoint.sh
 
