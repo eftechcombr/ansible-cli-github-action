@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:lts
 
 RUN apt-get update \
   && apt install -y python3-pip
