@@ -1,9 +1,11 @@
 FROM ubuntu:lts
 
 RUN apt-get update \
-  && apt install -y python3-pip
+  && apt install -y python3-pip python3-venv
 
-RUN pip3 install ansible
+RUN python3 -m venv env \
+  && source env/bin/activate \
+  && pip3 install ansible
 
 COPY entrypoint.sh /entrypoint.sh
 
