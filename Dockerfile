@@ -1,4 +1,4 @@
-FROM ubuntu:lts
+FROM ubuntu:latest
 
 RUN apt-get update \
   && apt install -y python3-pip python3-venv
