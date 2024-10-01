@@ -1,0 +1,16 @@
+name: Docker
+
+on:
+  workflow_dispatch: 
+
+  # push:
+  #   branches:
+  #     - "latest" 
+  # release: 
+  #   types: 
+  #     - published
+
+uses: github.com/eftechcombr/ansible-cli-github-action@v0.0.1
+with:
+  command: "-v"
+  # command: "ansible-playbook main.yml"
