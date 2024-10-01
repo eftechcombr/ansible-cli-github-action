@@ -4,8 +4,25 @@ on:
   workflow_dispatch: 
 
 jobs: 
+  build-and-run:
+    runs-on: ubuntu-latest
 
-  uses: eftechcombr/ansible-cli-github-action@master
-  with:
-    command: "-v"
-    # command: "ansible-playbook main.yml"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: false # Don't push to a registry
+          file: Dockerfile
+          tags: eftechcombr/ansible:latest
+
+      - name: Run Docker container
+        run: docker run --rm -it --name ansible eftechcombr/ansible:latest ansible -v
+
+        
