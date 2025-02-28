@@ -23,6 +23,6 @@ jobs:
           tags: eftechcombr/ansible-cli-github-action:latest
 
       - name: Run Docker container
-        run: docker run --rm -it --name ansible eftechcombr/ansible:latest ansible -v
+        run: docker run --rm -i --name ansible eftechcombr/ansible-cli-github-action:latest ansible -v
 
         
