@@ -6,7 +6,9 @@ COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT [ "sh", "-c" ]
-# (Optional) Set the default command to run when the container starts
-CMD ["ansible-playbook", "main.yaml"] 
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+# CMD ["ansible-playbook", "main.yaml"] 
 
