@@ -1,12 +1,12 @@
-FROM ubuntu:24.04
+FROM python:3-slim
 
-RUN apt-get update \
-  && apt install -y python3-pip python3-venv
+WORKDIR /usr/src/app
 
-RUN python3 -m venv env \
-  && source env/bin/activate \
-  && pip3 install ansible pywinrm[credssp]
+COPY requirements.txt ./
 
-COPY entrypoint.sh /entrypoint.sh
+RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT [ "sh", "-c" ]
+# (Optional) Set the default command to run when the container starts
+CMD ["ansible-playbook", "main.yaml"] 
+

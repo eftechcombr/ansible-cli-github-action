@@ -1,0 +1,7 @@
+services:
+  ansible:
+    build: .
+    image: eftechcombr/ansible-cli-github-action 
+
+
+
