@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-eval $1
+exec "$@"

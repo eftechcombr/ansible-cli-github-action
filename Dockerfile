@@ -1,12 +1,11 @@
-FROM python:3-slim
+FROM python:3.11-slim
 
-WORKDIR /usr/src/app
+COPY requirements.txt .
 
-COPY requirements.txt ./
-
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 
 COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 

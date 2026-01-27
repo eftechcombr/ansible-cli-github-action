@@ -2,9 +2,12 @@ name: "Ansible CLI Github Action"
 description: "Allows one to run Ansible and Linux related commands"
 inputs:
   command:
-    description: "Command to execute"
+    description: "Ansible command to execute (e.g., 'ansible-playbook site.yml', 'ansible-galaxy install -r requirements.yml')"
     required: true
     default: "ansible-playbook"
+branding:
+  icon: 'terminal'
+  color: 'red'
 runs:
   using: "docker"
   image: "Dockerfile"
