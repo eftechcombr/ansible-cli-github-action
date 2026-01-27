@@ -10,5 +10,5 @@ COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-# CMD ["ansible-playbook", "main.yaml"] 
+CMD ["ansible", "--version"] 
 
