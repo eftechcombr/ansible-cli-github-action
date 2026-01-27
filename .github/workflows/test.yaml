@@ -2,6 +2,11 @@ name: Docker
 
 on:
   workflow_dispatch: 
+    inputs:
+      command:
+        description: "Command to execute"
+        required: true
+        default: "ansible-playbook"
 
 jobs: 
   build-and-run:
