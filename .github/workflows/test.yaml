@@ -1,4 +1,4 @@
-name: Build
+name: Run 
 
 on:
   workflow_dispatch: 
@@ -9,25 +9,7 @@ on:
         default: "ansible-playbook"
 
 jobs: 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      
-      - name: Build Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: false # Don't push to a registry
-          file: Dockerfile
-          tags: eftechcombr/ansible:latest
-
   run: 
-    needs: build 
     runs-on: ubuntu-latest
     steps: 
       - uses: eftechcombr/ansible-cli-github-action@master
