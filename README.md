@@ -194,6 +194,7 @@ jobs:
 
 Because the workflow runs on a self-hosted runner inside the internal network, it can resolve `db-primary.internal.example.com` -- hosts that would not be reachable from GitHub-hosted runners. The action's Docker image supplies Ansible and all dependencies, so no additional setup is needed on the runner host.
 
+
 ## Enabling WinRM on Windows Nodes for Ansible
 
 WinRM (Windows Remote Management) is Microsoft's implementation of the WS-Management protocol. Ansible uses WinRM to communicate with Windows hosts because Windows does not ship with an SSH server by default. Before you can manage a Windows node with Ansible, WinRM must be enabled and configured on that node.
@@ -340,6 +341,7 @@ pip install pywinrm[credssp] ansible
 **Reference links**  
 - [Ansible Windows WinRM guide](https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html)
 - [Homebrew and Python PEP 668](https://docs.brew.sh/Homebrew-and-Python#pep-668-python312-and-virtual-environments)
+
 
 ## Testing
 
