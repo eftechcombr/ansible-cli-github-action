@@ -1,0 +1,7 @@
+---
+- name: Smoke test connectivity
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Verify reachability
+      ping:
