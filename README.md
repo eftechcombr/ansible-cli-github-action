@@ -193,7 +193,6 @@ jobs:
 ```
 
 Because the workflow runs on a self-hosted runner inside the internal network, it can resolve `db-primary.internal.example.com` -- hosts that would not be reachable from GitHub-hosted runners. The action's Docker image supplies Ansible and all dependencies, so no additional setup is needed on the runner host.
-
 ## Testing
 
 Run the smoke test suite locally to verify the Docker image builds and all Ansible tools work correctly:
