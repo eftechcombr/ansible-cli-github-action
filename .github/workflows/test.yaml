@@ -1,18 +1,54 @@
-name: Run 
+name: Smoke tests
 
 on:
-  workflow_dispatch: 
-    inputs:
-      command:
-        description: "Command to execute"
-        required: true
-        default: "ansible-playbook"
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
 
-jobs: 
-  run: 
+jobs:
+  smoke:
     runs-on: ubuntu-latest
-    steps: 
-      - uses: eftechcombr/ansible-cli-github-action@master
-        with:
-          command: "ansible --version"
-    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t ansible-cli-smoke:test .
+
+      - name: smoke_build — image built
+        run: docker image inspect ansible-cli-smoke:test > /dev/null
+
+      - name: smoke_ansible — CLI version checks
+        run: |
+          docker run --rm ansible-cli-smoke:test "ansible --version"
+          docker run --rm ansible-cli-smoke:test "ansible-playbook --version"
+          docker run --rm ansible-cli-smoke:test "ansible-inventory --help"
+
+      - name: smoke_python — dependency imports
+        run: |
+          docker run --rm ansible-cli-smoke:test "python -c 'import winrm; print(\"winrm ok\")'"
+          docker run --rm ansible-cli-smoke:test "python -c 'import ansible; print(\"ansible ok\")'"
+
+      - name: smoke_shell — eval passthrough
+        run: |
+          OUTPUT=$(docker run --rm ansible-cli-smoke:test "echo hello from ansible")
+          [ "$OUTPUT" = "hello from ansible" ] || { echo "FAIL: $OUTPUT"; exit 1; }
+
+      - name: smoke_shell — exit code propagation
+        run: |
+          set +e
+          docker run --rm ansible-cli-smoke:test "exit 42"
+          RC=$?
+          set -e
+          [ "$RC" -eq 42 ] || { echo "FAIL: expected 42, got $RC"; exit 1; }
+
+      - name: smoke_playbook — syntax check
+        run: |
+          docker run --rm -v ${{ github.workspace }}/tests:/tests:ro ansible-cli-smoke:test \
+            "ansible-playbook --syntax-check /tests/test.yml"
+
+      - name: smoke_playbook — ping localhost
+        run: |
+          docker run --rm -v ${{ github.workspace }}/tests:/tests:ro ansible-cli-smoke:test \
+            "ansible-playbook -i 'localhost,' -c local /tests/test.yml"
